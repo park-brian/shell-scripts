@@ -1,4 +1,4 @@
-yum install gnome-themes-standard gtk-murrine-engine
+yum install gnome-themes-standard gtk-murrine-engine automake autoconf pkgconfig gtk3-devel 
 
 rm -rf /usr/share/themes/{Arc,Arc-Darker,Arc-Dark}
 
