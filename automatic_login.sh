@@ -3,7 +3,7 @@
 
 $user=user
 
-tee /etc/gdm/custom.conf <<-'EOF'
+tee /etc/gdm/custom.conf <<- EOF
 # GDM configuration storage
 [daemon]
 
