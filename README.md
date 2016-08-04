@@ -1,3 +1,3 @@
-# centos-7-automated-vm-setup
+#### Shell scripts
 
-This repository contains shell scripts used to automate tasks in the creation of a CentOS VM.
+This repository contains shell scripts used for automating certain tasks.
