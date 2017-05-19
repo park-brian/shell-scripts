@@ -44,11 +44,11 @@ for FILE in "${!FILE_URLS[@]}"; do
 
   if [ ! -e "$FILEPATH" ]; then
     URL=${FILE_URLS[$FILE]}
-    echo -e "Downloading $FILE from $URL \n"
+    echo -e "[DOWNLOAD] $FILE [FROM] $URL \n"
     curl -L "$URL" -o "$FILEPATH"
     echo
   else
-    echo "[EXISTS] $FILEPATH"
+    echo "[FILE EXISTS] $FILEPATH"
   fi
 done
 
