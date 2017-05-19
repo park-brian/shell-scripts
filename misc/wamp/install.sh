@@ -5,9 +5,15 @@ HTTPD_ARCHIVE="httpd-2.4.25-x86-vc14-r1.zip"
 MYSQL_ARCHIVE="mysql-5.7.17-win32.zip" 
 PHP_ARCHIVE="php-7.1.5-Win32-VC14-x86.zip"
 
-HTTPD_REMOTE_PATH="http://www.apachehaus.com/downloads/${HTTPD_ARCHIVE}" 
-MYSQL_REMOTE_PATH="https://downloads.mysql.com/archives/get/file/${MYSQL_ARCHIVE}"
-PHP_REMOTE_PATH="http://windows.php.net/downloads/releases/${PHP_ARCHIVE}"
+HTTPD_ARCHIVE_64="httpd-2.4.25-x86-vc14-r1.zip"
+MYSQL_ARCHIVE_64="mysql-5.7.17-win32.zip" 
+PHP_ARCHIVE_64="php-7.1.5-Win32-VC14-x86.zip"
+
+declare -A FILE_ARCHIVE_MAP=(
+  [$HTTPD_ARCHIVE]="httpd"
+  [$MYSQL_ARCHIVE]="mysql"
+  [$PHP_ARCHIVE]="php"
+)
 
 declare -A FILE_URLS=(
   [$HTTPD_ARCHIVE]="http://www.apachehaus.com/downloads/${HTTPD_ARCHIVE}"
@@ -15,52 +21,56 @@ declare -A FILE_URLS=(
   [$PHP_ARCHIVE]="http://windows.php.net/downloads/releases/${PHP_ARCHIVE}"
 )
 
+declare -A FILE_EXTRACT_PATHS=(
+  [$HTTPD_ARCHIVE]="Apache24"
+  [$MYSQL_ARCHIVE]="mysql-5.7.17-win32"
+  [$PHP_ARCHIVE]=""
+)
+
 echo "Windows Apache MySQL PHP (WAMP)"
 echo
-echo "This script will download and extract the following components to the current directory: "
-echo " - httpd-2.4.25-x86-vc14-r1"
-echo " - mysql-5.7.17-win32"
-echo " - php-7.1.5-Win32-VC14-x86"
+echo "This script will download and extract the following 32-bit components to the current directory: "
+echo " - httpd-2.4.25"
+echo " - mysql-5.7.17"
+echo " - php-7.1.5"
 echo
 
 rm -rf httpd php mysql
 mkdir -p httpd php mysql $TMP
 
 ## ensure all files have been downloaded
-for FILE in "${!FILE_URLS[@]}"
-do
-  if [ ! -e "$TMP/$FILE" ]
-  then
+for FILE in "${!FILE_URLS[@]}"; do
+  FILEPATH="$TMP/$FILE"
+
+  if [ ! -e "$FILEPATH" ]; then
     URL=${FILE_URLS[$FILE]}
     echo -e "Downloading $FILE from $URL \n"
-    curl -L "$URL" -o "$TMP/$FILE"
+    curl -L "$URL" -o "$FILEPATH"
     echo
+  else
+    echo "[EXISTS] $FILEPATH"
   fi
 done
 
+echo
+
+## extract files to the appropriate directories
+for FILE in "${!FILE_EXTRACT_PATHS[@]}"; do
+  FILEPATH="$TMP/$FILE"
+  COMPONENT="${FILE_ARCHIVE_MAP[$FILE]}"
+  EXTRACT_PATH="$TMP/$COMPONENT/${FILE_EXTRACT_PATHS[$FILE]}"
 
 
+  echo "[UNZIP] $FILEPATH [->] ${TMP}/${COMPONENT}" 
+  unzip -u -q $FILEPATH -d "${TMP}/${COMPONENT}"
 
-## echo "Downloading ${HTTPD_ARCHIVE}"
-## curl -L "$HTTPD_REMOTE_PATH" -o "${TMP}/${HTTPD_ARCHIVE}"
-## 
-## echo "Downloading ${MYSQL_ARCHIVE}"
-## curl -L "$MYSQL_REMOTE_PATH" -o "${TMP}/${MYSQL_ARCHIVE}"
-## 
-## echo "Downloading ${PHP_ARCHIVE}"
-## curl -L "$PHP_REMOTE_PATH" -o "${TMP}/${PHP_ARCHIVE}"
-## 
-## # extract ./tmp/httpd.zip to ./httpd
-## unzip $TMP/$HTTPD_ARCHIVE -d $TMP/httpd
-## mv -T $TMP/httpd/Apache24/ httpd/
-## rm -rf $TMP/httpd
-## 
-## # extract ./tmp/php.zip to ./php
-## unzip $TMP/$PHP_ARCHIVE -d php
-## 
-## # extract ./tmp/mysql.zip to ./mysql
-## # unzip tmp/mysql.zip
-## 
-## # copy default configuaration
-## cp -rf defaults/* ./
-## 
+  echo "[MV] $EXTRACT_PATH [->] $COMPONENT"
+  mv -T $EXTRACT_PATH $COMPONENT
+
+  echo
+done
+
+## copy default configuaration
+echo "[COPY] defaults/* [->] ./"
+cp -rf defaults/* ./
+
