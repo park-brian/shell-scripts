@@ -1,12 +1,17 @@
 #!/bin/bash
 
 TMP="temp"
-HTTPD_ARCHIVE="httpd-2.4.25-x86-vc14-r1.zip"
-MYSQL_ARCHIVE="mysql-5.7.17-win32.zip" 
-PHP_ARCHIVE="php-7.1.5-Win32-VC14-x86.zip"
+
+HTTPD_VERSION="2.4.25"
+MYSQL_VERSION="5.7.17"
+PHP_VERSION="7.1.5"
+
+HTTPD_ARCHIVE="httpd-${HTTPD_VERSION}-x86-vc14-r1.zip"
+MYSQL_ARCHIVE="mysql-${MYSQL_VERSION}-win32.zip"
+PHP_ARCHIVE="php-${PHP_VERSION}-Win32-VC14-x86.zip"
 
 HTTPD_ARCHIVE_64="httpd-2.4.25-x86-vc14-r1.zip"
-MYSQL_ARCHIVE_64="mysql-5.7.17-win32.zip" 
+MYSQL_ARCHIVE_64="mysql-5.7.17-win32.zip"
 PHP_ARCHIVE_64="php-7.1.5-Win32-VC14-x86.zip"
 
 declare -A FILE_ARCHIVE_MAP=(
@@ -30,9 +35,9 @@ declare -A FILE_EXTRACT_PATHS=(
 echo "Windows Apache MySQL PHP (WAMP)"
 echo
 echo "This script will download and extract the following 32-bit components to the current directory: "
-echo " - httpd-2.4.25"
-echo " - mysql-5.7.17"
-echo " - php-7.1.5"
+echo " - httpd ${HTTPD_VERSION}2.4.25"
+echo " - mysql ${MYSQL_VERSION}"
+echo " - php ${PHP_VERSION}"
 echo
 
 rm -rf httpd php mysql
@@ -61,7 +66,7 @@ for FILE in "${!FILE_EXTRACT_PATHS[@]}"; do
   EXTRACT_PATH="$TMP/$COMPONENT/${FILE_EXTRACT_PATHS[$FILE]}"
 
 
-  echo "[UNZIP] $FILEPATH [->] ${TMP}/${COMPONENT}" 
+  echo "[UNZIP] $FILEPATH [->] ${TMP}/${COMPONENT}"
   unzip -u -q $FILEPATH -d "${TMP}/${COMPONENT}"
 
   echo "[MV] $EXTRACT_PATH [->] $COMPONENT"
