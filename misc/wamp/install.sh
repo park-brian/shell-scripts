@@ -32,6 +32,7 @@ declare -A FILE_EXTRACT_PATHS=(
   [$PHP_ARCHIVE]=""
 )
 
+
 echo "Windows Apache MySQL PHP (WAMP)"
 echo
 echo "This script will download and extract the following 32-bit components to the current directory: "
@@ -75,7 +76,9 @@ for FILE in "${!FILE_EXTRACT_PATHS[@]}"; do
   echo
 done
 
+## download sqlsrv extensions
+## sh download_sqlsrv.sh
+
 ## copy default configuaration
 echo "[COPY] defaults/* [->] ./"
 cp -rf defaults/* ./
-
