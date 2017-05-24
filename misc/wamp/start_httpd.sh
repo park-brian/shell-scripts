@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "Starting httpd..."
+echo "httpd is now running..."
 
 cd httpd
 bin/httpd.exe
