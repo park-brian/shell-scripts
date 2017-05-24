@@ -6,13 +6,9 @@ HTTPD_VERSION="2.4.25"
 MYSQL_VERSION="5.7.17"
 PHP_VERSION="7.1.5"
 
-HTTPD_ARCHIVE="httpd-${HTTPD_VERSION}-x86-vc14-r1.zip"
-MYSQL_ARCHIVE="mysql-${MYSQL_VERSION}-win32.zip"
-PHP_ARCHIVE="php-${PHP_VERSION}-Win32-VC14-x86.zip"
-
-HTTPD_ARCHIVE_64="httpd-2.4.25-x86-vc14-r1.zip"
-MYSQL_ARCHIVE_64="mysql-5.7.17-win32.zip"
-PHP_ARCHIVE_64="php-7.1.5-Win32-VC14-x86.zip"
+HTTPD_ARCHIVE="httpd-${HTTPD_VERSION}-x64-vc14-r1.zip"
+MYSQL_ARCHIVE="mysql-${MYSQL_VERSION}-winx64.zip"
+PHP_ARCHIVE="php-${PHP_VERSION}-Win32-VC14-x64.zip"
 
 declare -A FILE_ARCHIVE_MAP=(
   [$HTTPD_ARCHIVE]="httpd"
@@ -28,15 +24,15 @@ declare -A FILE_URLS=(
 
 declare -A FILE_EXTRACT_PATHS=(
   [$HTTPD_ARCHIVE]="Apache24"
-  [$MYSQL_ARCHIVE]="mysql-5.7.17-win32"
+  [$MYSQL_ARCHIVE]="mysql-5.7.17-winx64"
   [$PHP_ARCHIVE]=""
 )
 
 
 echo "Windows Apache MySQL PHP (WAMP)"
 echo
-echo "This script will download and extract the following 32-bit components to the current directory: "
-echo " - httpd ${HTTPD_VERSION}2.4.25"
+echo "This script will download and extract the following 64-bit components to the current directory: "
+echo " - httpd ${HTTPD_VERSION}"
 echo " - mysql ${MYSQL_VERSION}"
 echo " - php ${PHP_VERSION}"
 echo
