@@ -1,5 +1,10 @@
 ## Portable WAMP Environment
 
+This script downloads, extracts, and configures the following 64-bit components: 
+ - httpd 2.4.25
+ - mysql 5.7.17
+ - php 7.1.5
+
 ### Getting Started
 ```sh
 
